@@ -53,24 +53,15 @@ object CanvasProcessorHighLevelApi {
             prepare()
         }
         val inputSurface = mediaRecorder.surface
-        // 終了フラグ
-        var isRunning = true
-        // トータルフレーム数。経過時間の計算で
-        var totalFrameCount = 0
-        // この値の間隔で Canvas を再描画する。 60 fps なら 16 になる
-        val frameToMs = 1000L / frameRate
+        val startTime = System.currentTimeMillis()
         mediaRecorder.start()
-        while (isActive && isRunning) {
-            for (i in 0 until frameRate) {
-                val positionMs = totalFrameCount * frameToMs
-                val canvas = inputSurface.lockHardwareCanvas()
-                isRunning = onCanvasDrawRequest(canvas, positionMs)
-                inputSurface.unlockCanvasAndPost(canvas)
-                totalFrameCount++
-                delay(frameToMs)
-                if (!isRunning) {
-                    break
-                }
+        while (isActive) {
+            val positionMs = System.currentTimeMillis() - startTime
+            val canvas = inputSurface.lockHardwareCanvas()
+            val isRunning = onCanvasDrawRequest(canvas, positionMs)
+            inputSurface.unlockCanvasAndPost(canvas)
+            if (!isRunning) {
+                break
             }
         }
         mediaRecorder.stop()

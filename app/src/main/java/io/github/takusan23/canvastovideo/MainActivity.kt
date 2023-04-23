@@ -17,15 +17,57 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import io.github.takusan23.canvastovideo.encoder.CanvasProcessor
 import io.github.takusan23.canvastovideo.encoder.CanvasProcessorHighLevelApi
 import io.github.takusan23.canvastovideo.ui.theme.CanvasToVideoTheme
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /*
+                // ベンチマーク用
+                GlobalScope.launch {
+                    val outlinePaint = Paint().apply {
+                        color = Color.BLACK
+                        style = Paint.Style.STROKE
+                        textSize = 80f
+                    }
+                    val innerPaint = Paint().apply {
+                        style = Paint.Style.FILL
+                        color = Color.WHITE
+                        textSize = 80f
+                    }
+                    // 描画時に呼び出される関数
+                    val onCanvasDrawRequest: Canvas.(Long) -> Boolean = { positionMs ->
+                        // this は Canvas
+                        drawColor(Color.LTGRAY)
+                        // positionMs は現在の動画の時間
+                        val text = "動画の時間 = ${"%.2f".format(positionMs / 1000f)}"
+                        // 枠取り文字
+                        drawText(text, 0f, 80f, outlinePaint)
+                        // 枠無し文字
+                        drawText(text, 0f, 80f, innerPaint)
+                        // true を返している間は動画を作成する。とりあえず 10 秒
+                        positionMs < 10_000
+                    }
+                    printMeasureTime {
+                        val resultFile = getExternalFilesDir(null)?.resolve("${System.currentTimeMillis()}.mp4")!!
+                        println("CanvasProcessor")
+                        CanvasProcessor.start(resultFile, onCanvasDrawRequest = onCanvasDrawRequest)
+                    }
+                    printMeasureTime {
+                        val resultFile = getExternalFilesDir(null)?.resolve("${System.currentTimeMillis()}.mp4")!!
+                        println("CanvasProcessorHighLevelApi")
+                        CanvasProcessorHighLevelApi.start(this@MainActivity, resultFile, onCanvasDrawRequest = onCanvasDrawRequest)
+                    }
+                }
+        */
+
+
         setContent {
             CanvasToVideoTheme {
                 // A surface container using the 'background' color from the theme
@@ -35,7 +77,14 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }
+
+inline fun printMeasureTime(block: () -> Unit) {
+    val time = measureTimeMillis(block)
+    println("時間 $time ms")
+}
+
 
 // TODO 別に Compose を使う必要はない。
 @Composable
@@ -58,7 +107,7 @@ fun MainScreen() {
         }
         isRunning.value = true
         // CanvasProcessor / CanvasProcessorHighLevelApi どっちを使うか
-        val isUseLowLevelApi = false
+        val isUseLowLevelApi = true
         // 描画時に呼び出される関数
         val onCanvasDrawRequest: Canvas.(Long) -> Boolean = { positionMs ->
             // this は Canvas
