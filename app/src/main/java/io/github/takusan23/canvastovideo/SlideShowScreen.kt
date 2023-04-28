@@ -34,9 +34,10 @@ private const val VIDEO_HEIGHT = 720
 @Composable
 fun SlideShowScreen() {
     val context = LocalContext.current
+    // 実行中フラグ
     val isRunning = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    // 画像を取得する
+    // 取得した画像を入れる配列
     val imageList = remember { mutableStateListOf<Uri>() }
     val imagePicker = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetMultipleContents()) {
         imageList.addAll(it)
@@ -61,7 +62,6 @@ fun SlideShowScreen() {
                 val uri = imageList.getOrNull(index) ?: return@start false
                 // 前回と違う画像の場合
                 if (prevBitmapPathPair?.first != uri) {
-                    // ハードウェア Bitmap だと、Canvas に描画出来ないため、ソフトウェア Bitmap を作る
                     val bitmap = createBitmapFromUri(context, uri).aspectResize(VIDEO_WIDTH, VIDEO_HEIGHT)
                     // 前の Bitmap を破棄してから
                     prevBitmapPathPair?.second?.recycle()
@@ -85,7 +85,10 @@ fun SlideShowScreen() {
     }
 
     Column {
+        // 画像のパスを表示
         imageList.forEach { Text(text = it.toString()) }
+
+        // 選択ボタン
         Button(
             modifier = Modifier.padding(10.dp),
             onClick = {
@@ -94,6 +97,7 @@ fun SlideShowScreen() {
             }
         ) { Text(text = "画像を選ぶ") }
 
+        // 実行中はエンコードボタンを塞ぐ
         if (isRunning.value) {
             Text(text = "エンコード中です")
         } else {

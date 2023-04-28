@@ -30,42 +30,42 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         /*
-                // ベンチマーク用
-                GlobalScope.launch {
-                    val outlinePaint = Paint().apply {
-                        color = Color.BLACK
-                        style = Paint.Style.STROKE
-                        textSize = 80f
-                    }
-                    val innerPaint = Paint().apply {
-                        style = Paint.Style.FILL
-                        color = Color.WHITE
-                        textSize = 80f
-                    }
-                    // 描画時に呼び出される関数
-                    val onCanvasDrawRequest: Canvas.(Long) -> Boolean = { positionMs ->
-                        // this は Canvas
-                        drawColor(Color.LTGRAY)
-                        // positionMs は現在の動画の時間
-                        val text = "動画の時間 = ${"%.2f".format(positionMs / 1000f)}"
-                        // 枠取り文字
-                        drawText(text, 0f, 80f, outlinePaint)
-                        // 枠無し文字
-                        drawText(text, 0f, 80f, innerPaint)
-                        // true を返している間は動画を作成する。とりあえず 10 秒
-                        positionMs < 10_000
-                    }
-                    printMeasureTime {
-                        val resultFile = getExternalFilesDir(null)?.resolve("${System.currentTimeMillis()}.mp4")!!
-                        println("CanvasProcessor")
-                        CanvasProcessor.start(resultFile, onCanvasDrawRequest = onCanvasDrawRequest)
-                    }
-                    printMeasureTime {
-                        val resultFile = getExternalFilesDir(null)?.resolve("${System.currentTimeMillis()}.mp4")!!
-                        println("CanvasProcessorHighLevelApi")
-                        CanvasProcessorHighLevelApi.start(this@MainActivity, resultFile, onCanvasDrawRequest = onCanvasDrawRequest)
-                    }
-                }
+                        // ベンチマーク用
+                        GlobalScope.launch {
+                            val outlinePaint = Paint().apply {
+                                color = Color.BLACK
+                                style = Paint.Style.STROKE
+                                textSize = 80f
+                            }
+                            val innerPaint = Paint().apply {
+                                style = Paint.Style.FILL
+                                color = Color.WHITE
+                                textSize = 80f
+                            }
+                            // 描画時に呼び出される関数
+                            val onCanvasDrawRequest: Canvas.(Long) -> Boolean = { positionMs ->
+                                // this は Canvas
+                                drawColor(Color.LTGRAY)
+                                // positionMs は現在の動画の時間
+                                val text = "動画の時間 = ${"%.2f".format(positionMs / 1000f)}"
+                                // 枠取り文字
+                                drawText(text, 0f, 80f, outlinePaint)
+                                // 枠無し文字
+                                drawText(text, 0f, 80f, innerPaint)
+                                // true を返している間は動画を作成する。とりあえず 10 秒
+                                positionMs < 10_000
+                            }
+                            printMeasureTime {
+                                val resultFile = getExternalFilesDir(null)?.resolve("${System.currentTimeMillis()}.mp4")!!
+                                println("CanvasProcessor")
+                                CanvasProcessor.start(resultFile, onCanvasDrawRequest = onCanvasDrawRequest)
+                            }
+                            printMeasureTime {
+                                val resultFile = getExternalFilesDir(null)?.resolve("${System.currentTimeMillis()}.mp4")!!
+                                println("CanvasProcessorHighLevelApi")
+                                CanvasProcessorHighLevelApi.start(this@MainActivity, resultFile, onCanvasDrawRequest = onCanvasDrawRequest)
+                            }
+                        }
         */
 
 
@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
             CanvasToVideoTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                   // MainScreen()
+                    // MainScreen()
                     SlideShowScreen()
                 }
             }
