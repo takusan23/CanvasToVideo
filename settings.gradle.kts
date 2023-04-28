@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CanvasToVideo"
-include ':app'
+include(":app")
