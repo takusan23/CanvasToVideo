@@ -4,6 +4,8 @@ Android で Canvas から動画を作る。
 
 https://user-images.githubusercontent.com/32033405/235225944-748106f4-89a0-48c0-b14d-7edfd2698b96.mp4
 
+https://user-images.githubusercontent.com/32033405/235321119-e8391d46-9fbd-4ed2-9cc7-5a2dd72b7d10.mp4
+
 # 開発者向け
 
 ## 利用ライブラリ
