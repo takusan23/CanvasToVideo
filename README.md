@@ -6,6 +6,13 @@ https://user-images.githubusercontent.com/32033405/235225944-748106f4-89a0-48c0-
 
 https://user-images.githubusercontent.com/32033405/235321119-e8391d46-9fbd-4ed2-9cc7-5a2dd72b7d10.mp4
 
+## Android 14 からは AV1 エンコーダーが使えるみたいです（？）
+エンコーダーに渡すパラメーターを`AV1`にすれば良いはず。  
+
+https://github.com/takusan23/CanvasToVideo/assets/32033405/0ac1c790-d91e-4333-9b72-aeefb8bd2d41
+
+https://github.com/takusan23/CanvasToVideo/assets/32033405/bf049fa0-7ba8-4857-a90a-311c7b3cc977
+
 # 開発者向け
 
 ## 利用ライブラリ
